@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
 
+import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 // import studentRoutes from "./routes/studentRoutes.js";
 // import educatorRoutes from "./routes/educatorRoutes.js";
@@ -37,7 +38,7 @@ const swaggerOptions = {
       title: "AnyKids API",
       version: "1.0.0",
       description:
-        "User, Student, Educator ve Playground CRUD işlemleri için API dokümantasyonu",
+        "AnyKids Servisleri",
     },
     servers: [
       {
@@ -45,14 +46,29 @@ const swaggerOptions = {
         description: "Aktif Sunucu",
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
-  apis: ["./routes/*.js"],
+  apis: ["./routes/*.js"], // 👈 routes klasörünü dahil et
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // 🔹 Route kayıtları
+app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 // app.use("/api/students", studentRoutes);
 // app.use("/api/educators", educatorRoutes);

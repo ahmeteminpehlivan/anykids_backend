@@ -17,27 +17,7 @@ export const getUserById = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-};
-
-export const createUser = async (req, res) => {
-  try {
-    const newUser = new User(req.body);
-    const saved = await newUser.save();
-    res.status(201).json(saved);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-};
-
-export const updateUser = async (req, res) => {
-  try {
-    const updated = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updated) return res.status(404).json({ message: "Kullanıcı bulunamadı" });
-    res.json(updated);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-};
+}; 
 
 export const deleteUser = async (req, res) => {
   try {

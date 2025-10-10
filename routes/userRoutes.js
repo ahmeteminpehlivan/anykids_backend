@@ -1,11 +1,10 @@
 import express from "express";
 import {
   getUsers,
-  getUserById,
-  createUser,
-  updateUser,
+  getUserById, 
   deleteUser,
 } from "../controllers/userController.js";
+import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -13,143 +12,68 @@ const router = express.Router();
  * @swagger
  * tags:
  *   name: Users
- *   description: Kullanıcı CRUD işlemleri
+ *   description: Kullanıcı yönetimi işlemleri
  */
 
 /**
  * @swagger
  * /api/users:
  *   get:
- *     summary: Tüm kullanıcıları getir
+ *     summary: Tüm kullanıcıları getirir (Token gerektirir)
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Başarılı işlem — tüm kullanıcılar listelendi
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   _id:
- *                     type: string
- *                   fullname:
- *                     type: string
- *                   email:
- *                     type: string
- *                   password:
- *                     type: string
+ *         description: Kullanıcı listesi
+ *       401:
+ *         description: Token geçersiz veya eksik
  */
-router.get("/", getUsers);
+router.get("/", protect, getUsers);
 
 /**
  * @swagger
  * /api/users/{id}:
  *   get:
- *     summary: ID’ye göre kullanıcı getir
+ *     summary: ID'ye göre kullanıcı getirir (Token gerektirir)
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         description: Kullanıcı ID’si
+ *       - in: path
+ *         name: id
  *         schema:
  *           type: string
+ *         required: true
+ *         description: Kullanıcı ID'si
  *     responses:
  *       200:
- *         description: Başarılı işlem — kullanıcı bulundu
+ *         description: Kullanıcı bulundu
  *       404:
  *         description: Kullanıcı bulunamadı
  */
-router.get("/:id", getUserById);
-
-/**
- * @swagger
- * /api/users:
- *   post:
- *     summary: Yeni kullanıcı oluştur
- *     tags: [Users]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               fullname:
- *                 type: string
- *                 example: Ad Soyad
- *               email:
- *                 type: string
- *                 example: test@example.com
- *               password:
- *                 type: string
- *                 example: 1234
- *     responses:
- *       201:
- *         description: Kullanıcı başarıyla oluşturuldu
- *       400:
- *         description: Geçersiz veri
- */
-router.post("/", createUser);
-
-/**
- * @swagger
- * /api/users/{id}:
- *   put:
- *     summary: Kullanıcı güncelle
- *     tags: [Users]
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         description: Güncellenecek kullanıcı ID’si
- *         schema:
- *           type: string
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               fullname:
- *                 type: string
- *                 example: Ad Soyad
- *               email:
- *                 type: string
- *                 example: test@example.com
- *               password:
- *                 type: string
- *                 example: 1234
- *     responses:
- *       200:
- *         description: Kullanıcı başarıyla güncellendi
- *       404:
- *         description: Kullanıcı bulunamadı
- */
-router.put("/:id", updateUser);
+router.get("/:id", protect, getUserById);
+ 
+ 
 
 /**
  * @swagger
  * /api/users/{id}:
  *   delete:
- *     summary: Kullanıcı sil
+ *     summary: Kullanıcı siler (Token gerektirir)
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - name: id
- *         in: path
+ *       - in: path
+ *         name: id
  *         required: true
- *         description: Silinecek kullanıcı ID’si
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: Kullanıcı başarıyla silindi
- *       404:
- *         description: Kullanıcı bulunamadı
+ *         description: Kullanıcı silindi
  */
-router.delete("/:id", deleteUser);
+router.delete("/:id", protect, deleteUser);
 
 export default router;
