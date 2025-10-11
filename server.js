@@ -7,9 +7,13 @@ import swaggerJsdoc from "swagger-jsdoc";
 
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-// import studentRoutes from "./routes/studentRoutes.js";
-// import educatorRoutes from "./routes/educatorRoutes.js";
-// import playgroundRoutes from "./routes/playgroundRoutes.js";
+import sessionRoutes from "./routes/sessionRoutes.js";
+import studentRoutes from "./routes/studentRoutes.js";
+import educatorRoutes from "./routes/educatorRoutes.js";
+import playAreaRoutes from "./routes/playAreaRoutes.js";
+import cafeMenuRoutes from "./routes/cafeMenuRoutes.js";
+import cafeSaleRoutes from "./routes/cafeSaleRoutes.js";
+import playGroupRoutes from "./routes/playGroupRoutes.js";
 
 dotenv.config();
 
@@ -70,9 +74,13 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // 🔹 Route kayıtları
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
-// app.use("/api/students", studentRoutes);
-// app.use("/api/educators", educatorRoutes);
-// app.use("/api/playgrounds", playgroundRoutes);
+app.use("/api/sessions", sessionRoutes);
+app.use("/api/students", studentRoutes);
+app.use("/api/educators", educatorRoutes);
+app.use("/api/playareas", playAreaRoutes);
+app.use("/api/cafeMenus", cafeMenuRoutes);
+app.use("/api/cafeSales", cafeSaleRoutes);
+app.use("/api/playGroups", playGroupRoutes);
 
 // 🔹 Ana route
 app.get("/", (req, res) => {

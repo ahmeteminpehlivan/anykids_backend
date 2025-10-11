@@ -57,12 +57,12 @@ router.post("/register", register);
  *           schema:
  *             type: object
  *             required:
- *               - username
+ *               - email
  *               - password
  *             properties:
- *               username:
+ *               email:
  *                 type: string
- *                 example: ahmet
+ *                 example: test@test.com
  *               password:
  *                 type: string
  *                 example: 12345
