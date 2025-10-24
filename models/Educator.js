@@ -5,6 +5,7 @@ const educatorSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   phone: { type: String },
   specialties: [{ type: Number }], // uzmanlık alanları
+  status :  { type: Number }
 }, { timestamps: true });
 
 export default mongoose.model("Educator", educatorSchema);

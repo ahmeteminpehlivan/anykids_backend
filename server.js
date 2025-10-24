@@ -30,10 +30,7 @@ mongoose
 // 🔹 Swagger ayarları
 const PORT = process.env.PORT || 5000;
 
-// Eğer Render'daysa BASE_URL kullan, değilse localhost
-const BASE_URL =
-  process.env.BASE_URL ||
-  `http://localhost:${PORT}`;
+const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
 
 const swaggerOptions = {
   definition: {
@@ -41,8 +38,7 @@ const swaggerOptions = {
     info: {
       title: "AnyKids API",
       version: "1.0.0",
-      description:
-        "AnyKids Servisleri",
+      description: "AnyKids Servisleri",
     },
     servers: [
       {
@@ -59,13 +55,9 @@ const swaggerOptions = {
         },
       },
     },
-    security: [
-      {
-        bearerAuth: [],
-      },
-    ],
+    security: [{ bearerAuth: [] }],
   },
-  apis: ["./routes/*.js"], // 👈 routes klasörünü dahil et
+  apis: ["./routes/*.js"],
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
@@ -85,6 +77,11 @@ app.use("/api/playGroups", playGroupRoutes);
 // 🔹 Ana route
 app.get("/", (req, res) => {
   res.send(`API çalışıyor ✅ Swagger: <a href="/api-docs">/api-docs</a>`);
+});
+
+// 🔹 “Isınma” endpoint (Frontend’in Render’ı uyandırması için)
+app.get("/api/ping", (req, res) => {
+  res.status(200).json({ message: "pong", timestamp: new Date() });
 });
 
 // 🔹 Server başlat

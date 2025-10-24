@@ -7,12 +7,7 @@ const sessionSchema = new mongoose.Schema({
   startTime: { type: String, required: true },
   endTime: { type: String, required: true },
   category: { type: String, required: true },
-  state: { type: Number, required: true },
-  studentsArray: [
-    {
-      studentId: { type: mongoose.Schema.Types.ObjectId, ref: "Student" }
-    },
-  ],
+  studentId: { type: mongoose.Schema.Types.ObjectId, ref: "Student", required: true },
 });
 
 export default mongoose.model("Session", sessionSchema);

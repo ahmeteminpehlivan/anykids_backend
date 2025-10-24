@@ -3,6 +3,7 @@ import {
   getUsers,
   getUserById, 
   deleteUser,
+  updateUser
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -75,5 +76,30 @@ router.get("/:id", protect, getUserById);
  *         description: Kullanıcı silindi
  */
 router.delete("/:id", protect, deleteUser);
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   put:
+ *     summary: Kullanıcı güncelle
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema: { type: object }
+ *     responses:
+ *       200: { description: Kullanıcı güncellendi }
+ *       401: { description: Token geçersiz veya eksik }
+ *       404: { description: Kullanıcı bulunamadı }
+ */
+router.put("/:id", protect, updateUser);
 
 export default router;
