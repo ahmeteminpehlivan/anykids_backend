@@ -71,7 +71,7 @@ export const login = async (req, res) => {
     res.json({
       message: "Giriş başarılı ✅",
       token,
-      user: { email: user.email },
+      user: { email: user.email, fullname: user.fullname },
     });
   } catch (err) {
     res.status(500).json({ message: err.message });

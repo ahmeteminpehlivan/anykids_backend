@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 
 const playAreaSchema = new mongoose.Schema({
-  fullname: { type: String, required: true },
-  date: { type: String, required: true },
-  startTime: { type: String, required: true },
-  endTime: { type: String, required: true },
-  durationMinutes: { type: Number, required: true },
-  status: { type: String, required : true }, 
+  fullname: { type: String },
+  date: { type: String },
+  startTime: { type: String },
+  endTime: { type: String },
+  durationMinutes: { type: Number },
+  status: { type: Number },
+  cost: { type: Number },
 }, { timestamps: true });
 
 export default mongoose.model("PlayArea", playAreaSchema);
